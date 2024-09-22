@@ -1,3 +1,4 @@
+import IMAGES from "../../images/images"
 
 const Login = () => {
     return (
@@ -15,7 +16,7 @@ const Login = () => {
                         </div>
 
                         {/* login credentials */}
-                        <div className="w-full h-52 mt-14 space-y-1">
+                        <div className="w-full h-52 mt-14 space-y-2">
                             {/* email */}
                             <div className="w-full h-12 mt-14">
                                 <label className="input input-bordered flex items-center gap-2">
@@ -50,7 +51,7 @@ const Login = () => {
                             </div>
                             {/* login button */}
                             <div className="w-full h-12 flex items-center justify-center">
-                                <button className="btn-sm btn btn-block btn-outline btn-success text-white">Log in</button>
+                                <button className="btn-sm btn btn-block btn-outline btn-success text-white">Login</button>
                             </div>
                             <div className="w-full h-12 flex items-start justify-center">
                                 <a className="link link-hover text-sm">Forgot password?</a>
@@ -71,8 +72,19 @@ const Login = () => {
                     {/* <div className="card-actions justify-end">
                         <button className="btn btn-primary">Listen</button>
                     </div> */}
-                    <div className="w-full h-full flex items-center justify-center">
-                    <p className="text-center text-2xl text-white font-bold">Welcome to Login, SAMPLE USER</p>
+                    <div className="w-full h-full flex flex-col items-center justify-center">
+                        <div className="w-full h-[10rem] space-y-3">
+                            <div className="w-full h-1/2 flex items-end">
+                                <p className="text-center text-2xl text-white font-bold">Welcome to Login</p>
+                            </div>
+                            <div className="w-full h-1/2  flex items-start justify-center">
+                                <p className="text-sm text-center text-white"> Don't have an account? <a className="link link-hover text-primary font-bold">Sign up</a></p>
+
+                            </div>
+                            {/* <div className="w-full h-1/3 flex justify-center items-start">
+                                <button className="btn w-48 btn-outline border-white rounded-full text-white">Sign up</button>
+                            </div> */}
+                        </div>
                     </div>
                 </div>
             </div>
