@@ -72,7 +72,7 @@ const Login = () => {
                         <button className="btn btn-primary">Listen</button>
                     </div> */}
                     <div className="w-full h-full flex items-center justify-center">
-                    <p className="text-center text-2xl text-white font-bold">Welcome to Login</p>
+                    <p className="text-center text-2xl text-white font-bold">Welcome to Login, SAMPLE USER</p>
                     </div>
                 </div>
             </div>
