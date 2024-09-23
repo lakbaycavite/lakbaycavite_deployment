@@ -1,0 +1,7 @@
+username login
+    -if usernameTextinput includes exact admin register as Admin
+
+npm install react-icons --save
+
+- animations
+npm install -D tailwindcss-animate
