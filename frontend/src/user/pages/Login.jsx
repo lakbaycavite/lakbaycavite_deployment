@@ -110,7 +110,7 @@ const Login = () => {
                         <div className="w-full h-48 space-y-2">
                             {/* email */}
                             <div className="w-full h-12">
-                                <label className={`input input-bordered flex items-center gap-2 ${errorMessageUser && 'input-error'}`}>
+                                <label className={`input input-bordered flex hover:shadow items-center gap-2 ${errorMessageUser && 'input-error'}`}>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 16 16"
@@ -128,7 +128,7 @@ const Login = () => {
                             </div>
                             {/* password */}
                             <div className="w-full h-12">
-                                <label className={`input input-bordered flex items-center gap-2 ${errorMessagePass && 'input-error'}`}>
+                                <label className={`input input-bordered flex hover:shadow items-center gap-2 ${errorMessagePass && 'input-error'}`}>
                                     {/* <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 16 16"
