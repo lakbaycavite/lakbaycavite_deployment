@@ -9,7 +9,7 @@ const Home = () => {
                 <div className="w-[42rem] h-[24rem]">
                     {/* navigate your way */}
                     <div className="w-full h-24 flex items-end">
-                        <label className="text-5xl">Navigate your way Cavite</label>
+                        <label className="text-5xl">Navigate your way</label>
                     </div>
                     {/* Lakbay Cavite */}
                     <div className="w-full h-24 flex items-center">
