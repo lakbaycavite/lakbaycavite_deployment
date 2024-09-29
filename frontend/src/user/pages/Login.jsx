@@ -18,7 +18,7 @@ const Login = () => {
         if (!value) {
             setErrorMessageUser('Input invalid.');
             return false;
-        } else if (value.length == 20) {
+        } else if (value.length == 40) {
             setErrorMessageUser('Input invalid.');
             return false;
         } else {
@@ -53,7 +53,7 @@ const Login = () => {
 
     const handleUserChange = (e) => {
         const value = e.target.value;
-        if (value.length <= 20) {
+        if (value.length <= 40) {
             setUserInput(value);
             validateInputUser(value);
         }
