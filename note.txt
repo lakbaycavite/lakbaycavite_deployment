@@ -5,3 +5,5 @@ npm install react-icons --save
 
 - animations
 npm install -D tailwindcss-animate
+
+npm emoji-picker

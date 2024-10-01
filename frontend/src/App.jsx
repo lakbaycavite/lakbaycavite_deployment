@@ -7,6 +7,9 @@ import Home from './user/pages/Home'
 import Login from './user/pages/Login'
 import Register from './user/pages/Register'
 
+// admin
+import Events from './admin/pages/Events'
+import Posts from './admin/pages/Posts'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -26,6 +29,9 @@ function App() {
           <Route path='/home' element={<Home />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
+
+          <Route path='/admin/event' element={<Events />} />
+          <Route path='/admin/post' element={<Posts />} />
         </Routes>
       </BrowserRouter>
     </div>

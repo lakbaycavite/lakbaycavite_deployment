@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
-const NavbarModifier = ({ children }) => {
+const AdminNavModifier = ({ children }) => {
 
     const location = useLocation()
 
@@ -10,9 +10,8 @@ const NavbarModifier = ({ children }) => {
     useEffect(() => {
         if (
             location.pathname === '/register' ||
-            location.pathname === '/admin/post' ||
-            location.pathname === '/admin/event' ||
-            location.pathname === '/admin/posts'
+            location.pathname === '/home' ||
+            location.pathname === '/login'
         ) {
             setShowNavbar(false)
         }
@@ -28,4 +27,4 @@ const NavbarModifier = ({ children }) => {
         )
 }
 
-export default NavbarModifier
+export default AdminNavModifier

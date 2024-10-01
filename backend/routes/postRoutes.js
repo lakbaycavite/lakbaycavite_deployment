@@ -20,10 +20,10 @@ router.get('/:id', getPost)
 router.post('/', createPost)
 
 // Update a post
-router.put('/:id', updatePost)
+router.put('/update/:id', updatePost)
 
 // Delete a post
-router.delete('/:id', deletePost)
+router.delete('/delete/:id', deletePost)
 
 
 module.exports = router

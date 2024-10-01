@@ -3,16 +3,20 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const postSchema = new Schema({
+    title: {
+        type: String,
+        required: false,
+    },
     content: {
         type: String,
         required: false,
     },
-    profileName: {
+    user: {
         type: String,
         required: false,
     },
-    imageUrl: {
-        type: String,
+    attachments: {
+        type: [String],
         required: false,
     },
     comments: [String],

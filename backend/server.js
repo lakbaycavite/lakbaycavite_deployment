@@ -2,6 +2,7 @@ require('dotenv').config()
 
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
 const postRoutes = require('./routes/postRoutes')
 const eventRoutes = require('./routes/eventRoutes')
 
@@ -10,6 +11,8 @@ const app = express()
 
 //middlewares
 app.use(express.json())
+app.use(cors())
+
     // - gives a function of req.body
 //routes
 app.use('/admin/post', postRoutes)
