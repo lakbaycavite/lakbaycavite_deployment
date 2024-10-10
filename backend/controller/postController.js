@@ -60,7 +60,7 @@ const deletePost = async (req, res) => {
 
 const updatePost = async (req, res) => {
     const { id } = req.params
-    const { content, profileName, imageUrl, comments } = req.body
+    const { title, content, eventType, attachments } = req.body
 
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -68,10 +68,10 @@ const updatePost = async (req, res) => {
     }
 
     const post = await Post.findOneAndUpdate({ _id: id }, {
+        title,
         content,
-        profileName,
-        imageUrl,
-        comments
+        eventType,
+        attachments
     })
 
     if (!post) {

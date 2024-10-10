@@ -20,9 +20,9 @@ router.get('/', getEvent)
 router.post('/', createEvent)
 
 // update an event
-router.put('/:id', updateEvent)
+router.put('/update/:id', updateEvent)
 
 // Delete an event
-router.delete('/:id', deleteEvent)
+router.delete('/delete/:id', deleteEvent)
 
 module.exports = router

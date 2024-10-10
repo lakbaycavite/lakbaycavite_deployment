@@ -11,8 +11,8 @@ const eventSchema = new Schema({
         type: String,
         required: false,
     },
-    imageUrl: {
-        type: String,
+    attachments: {
+        type: [String],
         required: false,
     },
     eventType: {

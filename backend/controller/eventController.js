@@ -2,10 +2,28 @@ const Event = require('../models/eventModel')
 const mongoose = require('mongoose')
 
 // get all event
+// const getEvents = async (req, res) => {
+//     const events = await Event.find({}).sort({ createdAt: -1 })
+//     res.status(200).json(events)
+// }       
+
 const getEvents = async (req, res) => {
-    const events = await Event.find({}).sort({ createdAt: -1 })
-    res.status(200).json(events)
-}
+    // const events = await Event.find({}).sort({ createdAt: -1 })
+    // res.status(200).json(events)
+
+    try{
+        const page = parseInt(req.query.page) || 1
+        const limit = parseInt(req.query.limit) || 10
+        const skip = (page - 1) * limit
+
+        const total = await Event.countDocuments()
+        const events = await Event.find().skip(skip).limit(limit)
+
+        res.status(200).json({ events, total, page, pages: Math.ceil(total/ limit), total })
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+}    
 
 // get a single event
 const getEvent = async (req, res) => {
