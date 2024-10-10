@@ -121,7 +121,7 @@ const Login = () => {
                                         <path
                                             d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
                                     </svg>
-                                    <input type="text" className="grow" value={userInput} placeholder="Email" onChange={handleUserChange} />
+                                    <input type="text" className="grow input" value={userInput} placeholder="Email" onChange={handleUserChange} />
                                     {errorMessageUser && <p className='text-error text-sm'>{errorMessageUser}</p>}
 
                                 </label>
@@ -142,7 +142,7 @@ const Login = () => {
                                     {
                                         (IsOpenEye === false) ? <FaRegEye className='cursor-pointer' onClick={handleToggle} /> : <FaRegEyeSlash className='cursor-pointer' onClick={handleToggle} />
                                     }
-                                    <input type={IsOpenEye ? 'password' : 'text'} className='grow' value={password} placeholder="Password" onChange={handlePassChange} />
+                                    <input type={IsOpenEye ? 'password' : 'text'} className='grow input' value={password} placeholder="Password" onChange={handlePassChange} />
                                     {errorMessagePass && <p className='text-error text-sm'>{errorMessagePass}</p>}
                                 </label>
 

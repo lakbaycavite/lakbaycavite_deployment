@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, matchPath } from 'react-router-dom'
 
 const NavbarModifier = ({ children }) => {
 
@@ -12,20 +12,21 @@ const NavbarModifier = ({ children }) => {
             location.pathname === '/register' ||
             location.pathname === '/admin/post' ||
             location.pathname === '/admin/event' ||
-            location.pathname === '/admin/posts'
+            location.pathname === '/admin/user' ||
+            matchPath('/post/display/:id', location.pathname)
         ) {
             setShowNavbar(false)
         }
-        else{
+        else {
             setShowNavbar(true)
         }
     }, [location])
 
-   
 
-        return (
-            <div>{showNavbar && children}</div>
-        )
+
+    return (
+        <div>{showNavbar && children}</div>
+    )
 }
 
 export default NavbarModifier

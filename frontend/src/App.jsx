@@ -10,6 +10,8 @@ import Register from './user/pages/Register'
 // admin
 import Events from './admin/pages/Events'
 import Posts from './admin/pages/Posts'
+import PostDisplay from './admin/pages/PostDisplay'
+import Users from './admin/pages/Users'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -17,7 +19,7 @@ function App() {
   return (
     <div className='main-body'>
       <BrowserRouter>
-      
+
         <NavbarModifier>
           <Navbar />
         </NavbarModifier>
@@ -30,8 +32,11 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
 
-          <Route path='/admin/event' element={<Events />} />
-          <Route path='/admin/post' element={<Posts />} />
+          <Route path='/admin/event' exact element={<Events />} />
+          <Route path='/admin/post' exact element={<Posts />} />
+          <Route path='/post/display/:id' exact element={<PostDisplay />} />
+
+          <Route path='/admin/user' exact element={<Users />} />
         </Routes>
       </BrowserRouter>
     </div>

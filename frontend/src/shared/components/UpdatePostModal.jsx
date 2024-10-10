@@ -70,6 +70,7 @@ const UpdatePostModal = ({ visible, onCloseUpdate, onSuccess, tempId }) => {
     useEffect(() => {
         axios.get('http://localhost:4000/admin/post/' + tempId)
             .then((res) => {
+                console.log(res.data)
                 setTitle(res.data.title)
                 setContent(res.data.content)
                 // setUser(res.data.user)
@@ -85,7 +86,7 @@ const UpdatePostModal = ({ visible, onCloseUpdate, onSuccess, tempId }) => {
     return (
         <>
             <dialog ref={modalRef} id="my_modal_1" className="modal " onCancel={handleESC} >
-                <div className="modal-box relative max-w-none w-[50rem] flex justify-center items-center bg-base-300">
+                <div className="modal-box relative max-w-none  flex justify-center items-center bg-base-300">
                     <form method="dialog">
                         {/* if there is a button in form, it will close the modal */}
                         <button onClick={handleClose} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>

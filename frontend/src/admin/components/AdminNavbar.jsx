@@ -8,6 +8,8 @@ const AdminNavbar = () => {
             return 'Posts';
         } else if (location.pathname === '/admin/event') {
             return 'Events';
+        } else if (location.pathname === '/admin/user') {
+            return 'Users';
         } else {
             return 'Default Title'; // Fallback title
         }
