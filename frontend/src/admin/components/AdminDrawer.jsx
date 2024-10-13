@@ -25,7 +25,7 @@ const AdminDrawer = ({ children }) => {
                 <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
                 <ul className="menu bg-primary text-base-content min-h-full w-80 p-4">
                     {/* Sidebar content here */}
-                    <Link to='/home' className="btn btn-ghost text-3xl font-bold text-gray-200 hover:bg-yellow-300 hover:text-black">Lakbay Cavite</Link>
+                    <Link to='/home' className="btn btn-ghost text-3xl font-bold text-gray-200 hover:bg-secondary hover:text-black">Lakbay Cavite</Link>
                     <br />
                     <br />
                     <label className="text-md text-gray-400">Main</label>
@@ -34,12 +34,12 @@ const AdminDrawer = ({ children }) => {
                     <li><a className="text-lg text-white hover:bg-secondary hover:text-black" onClick={() => navigate('/admin/post')}><BsFillPostcardFill /> Posts</a></li>
                     <li><a className="text-lg text-white hover:bg-secondary hover:text-black" onClick={() => navigate('/admin/event')}><MdEvent /> Events</a></li>
                     <br />
-                    <br />
+                    {/* <br />
                     <label className="text-md text-gray-400">Pages</label>
                     <li><a className="text-lg text-white hover:bg-secondary hover:text-black"><IoHome /> Home</a></li>
                     <li><a className="text-lg text-white hover:bg-secondary hover:text-black"><GiMagnifyingGlass /> Placefinder</a></li>
                     <li><a className="text-lg text-white hover:bg-secondary hover:text-black"><FaMap /> Maps</a></li>
-                    <li><a className="text-lg text-white hover:bg-secondary hover:text-black"><RiCommunityFill /> Community</a></li>
+                    <li><a className="text-lg text-white hover:bg-secondary hover:text-black"><RiCommunityFill /> Community</a></li> */}
                 </ul>
             </div>
         </div>

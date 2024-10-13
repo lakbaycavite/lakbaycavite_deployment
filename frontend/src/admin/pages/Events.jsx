@@ -120,7 +120,7 @@ const Events = () => {
                                     <input type="text" className="grow input w-full max-w-xs input-sm" placeholder="Search" />
                                     <HiMiniMagnifyingGlass />
                                 </label>
-                                <button onClick={() => setVisible(true)} className="btn btn-sm text-xs w-20 bg-secondary text-white"> Post </button>
+                                <button onClick={() => setVisible(true)} className="btn btn-sm text-xs w-20 bg-secondary text-white"> Event </button>
                             </div>
                             <div className="w-[34rem] h-12 flex justify-between items-center">
                                 <div className="join flex items-center justify-center">
@@ -195,8 +195,15 @@ const Events = () => {
                                                 <td>{item.eventType}</td>
                                                 <td>{moment(item.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</td>
                                                 <td>
-                                                    <button className="btn btn-ghost btn-xs"><MdSystemUpdateAlt /></button>
-                                                    <button className="btn btn-ghost btn-xs" onClick={() => handleConfirmModal(item._id)}><RiDeleteBin6Line /></button>
+                                                    <div className='space-x-2 flex flex-row'>
+                                                        <div className='tooltip tooltip-info' data-tip='Open Event'>
+                                                            <button className="btn btn-ghost btn-xs"><MdSystemUpdateAlt /></button>
+                                                        </div>
+                                                        <div className='tooltip tooltip-error' data-tip='Delete Event'>
+                                                            <button className="btn btn-ghost btn-xs" onClick={() => handleConfirmModal(item._id)}><RiDeleteBin6Line /></button>
+                                                        </div>
+                                                    </div>
+
                                                 </td>
                                             </tr>
                                         ))}

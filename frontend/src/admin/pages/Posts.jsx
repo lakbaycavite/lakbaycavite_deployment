@@ -33,17 +33,30 @@ const Posts = () => {
 
     const [tempId, setTempId] = useState('')
 
+    const [currentPage, setCurrentPage] = useState(1)
+    const [limit, setLimit] = useState(10)
+    const [totalPages, setTotalPages] = useState(1)
+    const [total, setTotal] = useState(0)
+    const [inputPage, setInputPage] = useState('')
+
     useEffect(() => {
-        axios.get('http://localhost:4000/admin/post/')
+        axios.get(`http://localhost:4000/admin/post?page=${currentPage}&limit=${limit}`)
             .then((response) => {
-                // console.log(response.data)
-                // setAllPosts(response.data)
-                dispatch({ type: 'SET_POSTS', payload: response.data })
+                console.log(response.data)
+                dispatch({ type: 'SET_POSTS', payload: response.data.posts || [] })
+                setTotalPages(response.data.pages)
+                setTotal(response.data.total)
             })
             .catch((error) => {
                 console.log(error)
             })
-    }, [])
+    }, [currentPage, limit])
+
+    const handlePageChange = (newPage) => {
+        if (newPage >= 1 && newPage <= totalPages) {
+            setCurrentPage(newPage); // Update the page number
+        }
+    };
 
     const onClose = () => {
         setVisible(false)
@@ -71,6 +84,8 @@ const Posts = () => {
     const handleView = (id) => {
         navigate('/post/display/' + id)
     }
+
+
 
     return (
 
@@ -100,23 +115,45 @@ const Posts = () => {
                             </div>
                             <div className="w-[34rem] h-12 flex justify-between items-center">
                                 <div className="join flex items-center justify-center">
-                                    <button className="join-item btn btn-sm"><MdOutlineKeyboardDoubleArrowLeft /></button>
-                                    <button className="join-item btn btn-sm"><MdOutlineKeyboardArrowLeft /></button>
-                                    <button className="join-item btn btn-sm"><MdOutlineKeyboardArrowRight /></button>
-                                    <button className="join-item btn btn-sm"><MdOutlineKeyboardDoubleArrowRight /></button>
+                                    <button className="join-item btn btn-sm" onClick={() => handlePageChange(1)} disabled={currentPage === 1}><MdOutlineKeyboardDoubleArrowLeft /></button>
+                                    <button className="join-item btn btn-sm" onClick={() => handlePageChange(currentPage - 1)}><MdOutlineKeyboardArrowLeft /></button>
+                                    <button className="join-item btn btn-sm" onClick={() => handlePageChange(currentPage + 1)}><MdOutlineKeyboardArrowRight /></button>
+                                    <button className="join-item btn btn-sm" onClick={() => handlePageChange(totalPages)} disabled={currentPage === totalPages}><MdOutlineKeyboardDoubleArrowRight /></button>
                                 </div>
-                                <p className="text-xs">page <label className="font-bold">1 of 3</label> | Go to page: <input type="text" className="input input-bordered input-xs w-14" /> </p>
+                                <p className="text-xs">page <label className="font-bold">{currentPage} of {totalPages}</label> | Go to page:
+                                    <input
+                                        type="text"
+                                        className="input input-bordered input-xs w-14"
+                                        value={inputPage}
+                                        onChange={(e) => setInputPage(e.target.value)}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter') {
+                                                const page = Number(inputPage); // Convert input to number
+                                                if (page >= 1 && page <= totalPages) {
+                                                    setCurrentPage(page); // Only update if valid
+                                                }
+                                            }
+                                        }}
+                                    />
+                                </p>
                                 <p className="text-xs">
-                                    Show <select className="select select-ghost w-14 select-xs">
-                                        <option>10</option>
-                                        <option>15</option>
-                                        <option>20</option>
-                                        <option>30</option>
-                                        <option>50</option>
+                                    Show<select
+                                        className="select select-ghost w-14 select-xs"
+                                        value={limit}
+                                        onChange={(e) => {
+                                            setLimit(Number(e.target.value));  // Update limit
+                                            setCurrentPage(1);  // Reset to page 1
+                                        }}
+                                    >
+                                        <option value={10}>10</option>
+                                        <option value={15}>15</option>
+                                        <option value={20}>20</option>
+                                        <option value={30}>30</option>
+                                        <option value={50}>50</option>
                                     </select>
                                 </p>
                                 <p className="text-xs">
-                                    Total: 130
+                                    Total: {total}
                                 </p>
                             </div>
                         </div>
@@ -173,23 +210,45 @@ const Posts = () => {
 
                             <div className="w-[34rem] h-12 flex justify-between items-center">
                                 <div className="join flex items-center justify-center">
-                                    <button className="join-item btn btn-sm"><MdOutlineKeyboardDoubleArrowLeft /></button>
-                                    <button className="join-item btn btn-sm"><MdOutlineKeyboardArrowLeft /></button>
-                                    <button className="join-item btn btn-sm"><MdOutlineKeyboardArrowRight /></button>
-                                    <button className="join-item btn btn-sm"><MdOutlineKeyboardDoubleArrowRight /></button>
+                                    <button className="join-item btn btn-sm" onClick={() => handlePageChange(1)} disabled={currentPage === 1}><MdOutlineKeyboardDoubleArrowLeft /></button>
+                                    <button className="join-item btn btn-sm" onClick={() => handlePageChange(currentPage - 1)}><MdOutlineKeyboardArrowLeft /></button>
+                                    <button className="join-item btn btn-sm" onClick={() => handlePageChange(currentPage + 1)}><MdOutlineKeyboardArrowRight /></button>
+                                    <button className="join-item btn btn-sm" onClick={() => handlePageChange(totalPages)} disabled={currentPage === totalPages}><MdOutlineKeyboardDoubleArrowRight /></button>
                                 </div>
-                                <p className="text-xs">page <label className="font-bold">1 of 3</label> | Go to page: <input type="text" className="input input-bordered input-xs w-14" /> </p>
+                                <p className="text-xs">page <label className="font-bold">{currentPage} of {totalPages}</label> | Go to page:
+                                    <input
+                                        type="text"
+                                        className="input input-bordered input-xs w-14"
+                                        value={inputPage}
+                                        onChange={(e) => setInputPage(e.target.value)}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter') {
+                                                const page = Number(inputPage); // Convert input to number
+                                                if (page >= 1 && page <= totalPages) {
+                                                    setCurrentPage(page); // Only update if valid
+                                                }
+                                            }
+                                        }}
+                                    />
+                                </p>
                                 <p className="text-xs">
-                                    Show <select className="select select-ghost w-14 select-xs">
-                                        <option>10</option>
-                                        <option>15</option>
-                                        <option>20</option>
-                                        <option>30</option>
-                                        <option>50</option>
+                                    Show<select
+                                        className="select select-ghost w-14 select-xs"
+                                        value={limit}
+                                        onChange={(e) => {
+                                            setLimit(Number(e.target.value));  // Update limit
+                                            setCurrentPage(1);  // Reset to page 1
+                                        }}
+                                    >
+                                        <option value={10}>10</option>
+                                        <option value={15}>15</option>
+                                        <option value={20}>20</option>
+                                        <option value={30}>30</option>
+                                        <option value={50}>50</option>
                                     </select>
                                 </p>
                                 <p className="text-xs">
-                                    Total: 130
+                                    Total: {total}
                                 </p>
                             </div>
                         </div>

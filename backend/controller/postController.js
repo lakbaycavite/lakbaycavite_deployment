@@ -3,9 +3,25 @@ const Post = require('../models/postModel')
 const mongoose = require('mongoose')
 
 // get all post
+// const getPosts = async (req, res) => {
+//     const posts = await Post.find({}).sort({ createdAt: -1 })
+//     res.status(200).json(posts)
+// }
+
 const getPosts = async (req, res) => {
-    const posts = await Post.find({}).sort({ createdAt: -1 })
-    res.status(200).json(posts)
+    
+    try {
+        const page = parseInt(req.query.page) || 1
+        const limit = parseInt(req.query.limit) || 10
+        const skip = (page - 1) * limit
+
+        const total = await Post.countDocuments()
+        const posts = await Post.find().skip(skip).limit(limit).sort({ createdAt: -1 })
+
+        res.status(200).json({ posts, total, page, pages: Math.ceil(total/ limit) })
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
 }
 
 // get a single post
