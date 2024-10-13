@@ -12,6 +12,7 @@ import Events from './admin/pages/Events'
 import Posts from './admin/pages/Posts'
 import PostDisplay from './admin/pages/PostDisplay'
 import Users from './admin/pages/Users'
+import EventDisplay from './admin/pages/EventDisplay'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -33,6 +34,7 @@ function App() {
           <Route path='/register' element={<Register />} />
 
           <Route path='/admin/event' exact element={<Events />} />
+          <Route path='/event/display/:id' exact element={<EventDisplay />} />
           <Route path='/admin/post' exact element={<Posts />} />
           <Route path='/post/display/:id' exact element={<PostDisplay />} />
 

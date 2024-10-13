@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React from 'react'
 import { useState } from 'react'
-import { MdSystemUpdateAlt } from "react-icons/md"
+import { FaRegEye } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri"
 import { useNavigate } from 'react-router-dom'
 import moment from 'moment';
@@ -19,10 +19,10 @@ const PostItem = (props) => {
     const { dispatch } = usePostsContext()
 
     const navigate = useNavigate();
-    const { openUpdate } = props
+    const { onDelete } = props
 
     const handleDelete = (id) => {
-
+        onDelete()
         axios.delete("http://localhost:4000/admin/post/delete/" + id)
             .then((response) => {
                 console.log(response);
@@ -63,14 +63,13 @@ const PostItem = (props) => {
                 </div>
             </td> */}
             <td>
-                <div className="space-x-2 flex flex-row">
+                <div className="flex flex-row">
                     <div className='tooltip tooltip-info' data-tip='Open Post'>
-                        <button className="btn btn-ghost btn-xs" onClick={() => handleView(props.pid)}><MdSystemUpdateAlt /></button>
+                        <button className="btn btn-ghost btn-xs" onClick={() => handleView(props.pid)}><FaRegEye /></button>
 
                     </div>
                     <div className='tooltip tooltip-error' data-tip='Delete Post'>
                         <button className="btn btn-ghost btn-xs" onClick={() => setOpenModal(true)}><RiDeleteBin6Line /></button>
-
                     </div>
                 </div>
             </td>

@@ -13,7 +13,9 @@ const NavbarModifier = ({ children }) => {
             location.pathname === '/admin/post' ||
             location.pathname === '/admin/event' ||
             location.pathname === '/admin/user' ||
-            matchPath('/post/display/:id', location.pathname)
+            matchPath('/post/display/:id', location.pathname) ||
+            matchPath('/event/display/:id', location.pathname)
+
         ) {
             setShowNavbar(false)
         }

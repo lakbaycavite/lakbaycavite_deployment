@@ -8,7 +8,7 @@ import { MdOutlineKeyboardArrowLeft } from "react-icons/md"
 import { MdOutlineKeyboardDoubleArrowLeft } from "react-icons/md"
 import { MdOutlineKeyboardArrowRight } from "react-icons/md"
 import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md"
-import { MdSystemUpdateAlt } from "react-icons/md"
+import { FaRegEye } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri"
 import { FaRegCheckCircle } from "react-icons/fa";
 
@@ -19,16 +19,21 @@ import AdminDrawer from "../components/AdminDrawer"
 import AdminNavbar from "../components/AdminNavbar"
 import UpdatePostModal from '../../shared/components/UpdatePostModal'
 import CreateEvent from '../../shared/components/CreateEvent'
+import { useNavigate } from 'react-router-dom';
 
 
 
 
 const Events = () => {
 
+    const navigate = useNavigate()
+
     const { events, dispatch } = useEventsContext()
     const [openModal, setOpenModal] = useState(false);
     const [visible, setVisible] = useState(false)
+
     const [success, setSuccess] = useState(false)
+    const [deleted, setDeleted] = useState(false)
 
     const [updateVisible, setUpdateVisible] = useState(false)
     const [tempId, setTempId] = useState('')
@@ -70,6 +75,13 @@ const Events = () => {
         }, 3000)
     }
 
+    const onDelete = () => {
+        setDeleted(true)
+        setTimeout(() => {
+            setDeleted(false)
+        }, 3000)
+    }
+
     const onCloseUpdate = () => {
         setUpdateVisible(false)
     }
@@ -83,6 +95,7 @@ const Events = () => {
         axios.delete("http://localhost:4000/admin/event/delete/" + id)
             .then((response) => {
                 console.log(response);
+                onDelete()
                 dispatch({ type: 'DELETE_EVENT', payload: response.data })
             })
             .catch((err) => {
@@ -98,6 +111,10 @@ const Events = () => {
 
     }
 
+    const handleView = (id) => {
+        navigate('/event/display/' + id)
+    }
+
     return (
         <>
             <AdminDrawer>
@@ -106,7 +123,13 @@ const Events = () => {
                 <div className={`toast toast-top toast-end transition duration-300 ${success ? 'opacity-100' : 'opacity-0'}`}>
                     <div className="alert alert-success">
                         <FaRegCheckCircle style={{ color: 'white' }} />
-                        <span className='text-white'> Post created successfully.</span>
+                        <span className='text-white'> Event created successfully.</span>
+                    </div>
+                </div>
+                <div className={`toast toast-top toast-end transition duration-300 ${deleted ? 'opacity-100' : 'opacity-0'}`}>
+                    <div className="alert alert-error">
+                        <FaRegCheckCircle style={{ color: 'white' }} />
+                        <span className='text-white'> Event deleted successfully.</span>
                     </div>
                 </div>
 
@@ -188,22 +211,19 @@ const Events = () => {
                                     <tbody>
                                         {/* row 1 */}
                                         {events && events.map((item, index) => (
-                                            <tr key={index}>
-                                                <td>{index + 1}</td>
+                                            <tr className='hover' key={index}>
+                                                <th>{index + 1}</th>
                                                 <td>{item.title}</td>
                                                 <td>{item.description}</td>
                                                 <td>{item.eventType}</td>
                                                 <td>{moment(item.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</td>
                                                 <td>
-                                                    <div className='space-x-2 flex flex-row'>
-                                                        <div className='tooltip tooltip-info' data-tip='Open Event'>
-                                                            <button className="btn btn-ghost btn-xs"><MdSystemUpdateAlt /></button>
-                                                        </div>
-                                                        <div className='tooltip tooltip-error' data-tip='Delete Event'>
-                                                            <button className="btn btn-ghost btn-xs" onClick={() => handleConfirmModal(item._id)}><RiDeleteBin6Line /></button>
-                                                        </div>
+                                                    <div className='tooltip tooltip-info' data-tip='Open Event'>
+                                                        <button className="btn btn-ghost btn-xs" onClick={() => handleView(item._id)}><FaRegEye /></button>
                                                     </div>
-
+                                                    <div className='tooltip tooltip-error' data-tip='Delete Event'>
+                                                        <button className="btn btn-ghost btn-xs" onClick={() => handleConfirmModal(item._id)}><RiDeleteBin6Line /></button>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         ))}

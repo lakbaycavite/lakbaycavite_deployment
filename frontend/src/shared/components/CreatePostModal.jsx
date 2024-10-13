@@ -16,6 +16,10 @@ const CreatePostModal = ({ Pvisible, onClose, onSuccess }) => {
     const [attachments, setAttachments] = useState('')
     const [comments, setComments] = useState([])
 
+    //validators
+    const [errorMessageTitle, setErrorMessageTitle] = useState('')
+    const [errorMessageContent, setErrorMessageContent] = useState('')
+
     const modalRef = useRef(null);
 
     useEffect(() => {
@@ -26,6 +30,11 @@ const CreatePostModal = ({ Pvisible, onClose, onSuccess }) => {
     }, [Pvisible]);
 
     const handleClose = () => {
+        setTitle('')
+        setContent('')
+        setErrorMessageTitle(false)
+        setErrorMessageContent(false)
+
         if (onClose) {
             onClose();
         }
@@ -34,6 +43,7 @@ const CreatePostModal = ({ Pvisible, onClose, onSuccess }) => {
     const handleESC = (event) => {
         event.preventDefault();
         handleClose();
+
     }
 
     const handleSuccess = () => {
@@ -41,7 +51,6 @@ const CreatePostModal = ({ Pvisible, onClose, onSuccess }) => {
     }
 
     const handlePost = async (e) => {
-        // e.preventDefault()
 
         const post = {
             title,
@@ -64,9 +73,50 @@ const CreatePostModal = ({ Pvisible, onClose, onSuccess }) => {
                 console.log(post);
                 console.log(err)
             })
-
-
     }
+
+    // input validations
+    const validateInputTitle = (value) => {
+        if (!value) {
+            setErrorMessageTitle('Input invalid.');
+            return false;
+        } else if (value.length == 40) {
+            setErrorMessageTitle('Input invalid.');
+            return false;
+        } else {
+            setErrorMessageTitle('');
+            return true;
+        }
+    };
+    const validateInputContent = (value) => {
+        if (!value) {
+            setErrorMessageContent('Input invalid.');
+            return false;
+        } else if (value.length == 20) {
+            setErrorMessageContent('Input invalid.');
+            return false;
+        } else {
+            setErrorMessageContent('');
+            return true;
+        }
+    };
+
+
+    const handleTitleChange = (e) => {
+        const value = e.target.value;
+        if (value.length <= 40) {
+            setTitle(value);
+            validateInputTitle(value);
+        }
+    };
+
+    const handleContentChange = (e) => {
+        const value = e.target.value;
+        if (value.length <= 1000) {
+            setContent(value)
+            validateInputContent(value);
+        }
+    };
 
     return (
         <>
@@ -85,12 +135,15 @@ const CreatePostModal = ({ Pvisible, onClose, onSuccess }) => {
                         </div>
                         {/* text input */}
                         <div className="w-full h-16 rounded-md flex justify-center items-center mt-5">
-                            <input type="text" placeholder="Type your title here..." value={title} className="input w-full input-md" onChange={(e) => setTitle(e.target.value)} />
-
+                            {/* <input type="text" placeholder="Type your title here..." value={title} className="input w-full input-md" onChange={handleTitleChange} /> */}
+                            <label className={`input w-full input-bordered flex hover:shadow items-center gap-2 ${errorMessageTitle && 'input-error'}`}>
+                                <input type='text' className='input grow input-md' value={title} placeholder="Type your title here..." onChange={handleTitleChange} />
+                                {errorMessageTitle && <p className='text-error text-sm'>{errorMessageTitle}</p>}
+                            </label>
                         </div>
                         <div className="w-full h-72 rounded-lg flex flex-col bg-white">
                             <div className="w-full h-5/6 rounded-xl">
-                                <textarea className="textarea w-full h-full" placeholder="Ask your inquiries here..." value={content} onChange={(e) => setContent(e.target.value)}></textarea>
+                                <textarea className={`textarea w-full h-full ${errorMessageContent && 'textarea-error'}`} placeholder="Ask your inquiries here..." value={content} onChange={handleContentChange}></textarea>
                             </div>
                             <div className="w-full h-1/6 rounded-lg flex flex-row justify-between">
                                 <div className="w-28 h-full flex items-center justify-evenly rounded-lg">
@@ -116,7 +169,7 @@ const CreatePostModal = ({ Pvisible, onClose, onSuccess }) => {
                         <div className="w-full h-8 mt-5 rounded-md flex justify-end">
                             <div className="w-[16rem] h-full flex justify-between">
                                 <button onClick={handleClose} className="btn btn-sm w-28"> Cancel </button>
-                                <button className="btn btn-sm btn-success text-white w-28" onClick={() => { handlePost() }}> Post </button>
+                                <button className={`btn btn-sm btn-success text-white w-28 ${!title || !content || errorMessageTitle || errorMessageContent ? 'btn-disabled' : ''}`} onClick={() => { handlePost() }}> Post </button>
                             </div>
                         </div>
                     </div>

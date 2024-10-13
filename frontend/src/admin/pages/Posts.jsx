@@ -29,7 +29,7 @@ const Posts = () => {
     const [success, setSuccess] = useState(false)
 
     const [updateVisible, setUpdateVisible] = useState(false)
-    const [updateSuccess, setUpdateSuccess] = useState(false)
+    const [deleted, setDeleted] = useState(false)
 
     const [tempId, setTempId] = useState('')
 
@@ -69,6 +69,13 @@ const Posts = () => {
         }, 3000)
     }
 
+    const onDelete = () => {
+        setDeleted(true)
+        setTimeout(() => {
+            setDeleted(false)
+        }, 3000)
+    }
+
     const onCloseUpdate = () => {
         setUpdateVisible(false)
     }
@@ -98,6 +105,12 @@ const Posts = () => {
                     <div className="alert alert-success">
                         <FaRegCheckCircle style={{ color: 'white' }} />
                         <span className='text-white'> Post created successfully.</span>
+                    </div>
+                </div>
+                <div className={`toast toast-top toast-end transition duration-300 ${deleted ? 'opacity-100' : 'opacity-0'}`}>
+                    <div className="alert alert-error">
+                        <FaRegCheckCircle style={{ color: 'white' }} />
+                        <span className='text-white'> Post deleted successfully.</span>
                     </div>
                 </div>
 
@@ -168,12 +181,12 @@ const Posts = () => {
                                     {/* head */}
                                     <thead>
                                         <tr>
-                                            <th className=''></th>
-                                            <th>Title</th>
-                                            <th>Content</th>
-                                            <th>Sender</th>
-                                            <th>Date Created</th>
-                                            <th>Actions</th>
+                                            <th></th>
+                                            <th className='w-1/4'>Title</th>
+                                            <th className='w-1/4'>Content</th>
+                                            <th className='w-1/5'>Sender</th>
+                                            <th className='w-1/6'>Date Created</th>
+                                            <th className=''>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -194,6 +207,7 @@ const Posts = () => {
                                                     created={item.createdAt}
                                                     openUpdate={openUpdate}
                                                     fetchId={fetchId}
+                                                    onDelete={onDelete}
                                                 />
                                             </tr>
                                         ))}

@@ -17,12 +17,13 @@ const getEvents = async (req, res) => {
         const skip = (page - 1) * limit
 
         const total = await Event.countDocuments()
-        const events = await Event.find().skip(skip).limit(limit)
+        const events = await Event.find().skip(skip).limit(limit).sort({ createdAt: -1 })
 
         res.status(200).json({ events, total, page, pages: Math.ceil(total/ limit), total })
     } catch (error) {
         res.status(500).json({ error: error.message })
     }
+    
 }    
 
 // get a single event
@@ -77,7 +78,7 @@ const deleteEvent = async (req, res) => {
 
 const updateEvent = async (req, res) => {
     const { id } = req.params
-    const { content, profileName, imageUrl, comments } = req.body
+    const { title, description, attachments } = req.body
 
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -85,10 +86,9 @@ const updateEvent = async (req, res) => {
     }
 
     const event = await Event.findOneAndUpdate({ _id: id }, {
-        content,
-        profileName,
-        imageUrl,
-        comments
+        title,
+        description,
+        attachments,
     })
 
     if (!event) {

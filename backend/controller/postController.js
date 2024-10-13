@@ -16,7 +16,7 @@ const getPosts = async (req, res) => {
         const skip = (page - 1) * limit
 
         const total = await Post.countDocuments()
-        const posts = await Post.find().skip(skip).limit(limit).sort({ createdAt: -1 })
+        const posts = await Post.find().skip(skip).limit(limit).sort({ createdAt: 1 })
 
         res.status(200).json({ posts, total, page, pages: Math.ceil(total/ limit) })
     } catch (error) {

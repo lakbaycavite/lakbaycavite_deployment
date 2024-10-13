@@ -15,7 +15,9 @@ const CreateEvent = ({ visible, onClose, onSuccess }) => {
     const [eventType, setEventType] = useState('')
     const [attachments, setAttachments] = useState('')
 
-
+    //validators
+    const [errorMessageTitle, setErrorMessageTitle] = useState('')
+    const [errorMessageDesc, setErrorMessageDesc] = useState('')
     const modalRef = useRef(null);
 
     useEffect(() => {
@@ -26,6 +28,11 @@ const CreateEvent = ({ visible, onClose, onSuccess }) => {
     }, [visible]);
 
     const handleClose = () => {
+        setTitle('')
+        setDescription('')
+        setErrorMessageTitle(false)
+        setErrorMessageDesc(false)
+
         if (onClose) {
             onClose();
         }
@@ -67,6 +74,49 @@ const CreateEvent = ({ visible, onClose, onSuccess }) => {
 
     }
 
+    // input validations
+    const validateInputTitle = (value) => {
+        if (!value) {
+            setErrorMessageTitle('Input invalid.');
+            return false;
+        } else if (value.length == 40) {
+            setErrorMessageTitle('Input invalid.');
+            return false;
+        } else {
+            setErrorMessageTitle('');
+            return true;
+        }
+    };
+    const validateInputDesc = (value) => {
+        if (!value) {
+            setErrorMessageDesc('Input invalid.');
+            return false;
+        } else if (value.length == 20) {
+            setErrorMessageDesc('Input invalid.');
+            return false;
+        } else {
+            setErrorMessageDesc('');
+            return true;
+        }
+    };
+
+
+    const handleTitleChange = (e) => {
+        const value = e.target.value;
+        if (value.length <= 40) {
+            setTitle(value);
+            validateInputTitle(value);
+        }
+    };
+
+    const handleDescChange = (e) => {
+        const value = e.target.value;
+        if (value.length <= 1000) {
+            setDescription(value)
+            validateInputDesc(value);
+        }
+    };
+
     return (
         <>
             <dialog ref={modalRef} id="my_modal_1" className="modal " onCancel={handleESC} >
@@ -84,12 +134,14 @@ const CreateEvent = ({ visible, onClose, onSuccess }) => {
                         </div>
                         {/* text input */}
                         <div className="w-full h-16 rounded-md flex justify-center items-center mt-5">
-                            <input type="text" placeholder="Type your title here..." value={title} className="input w-full input-md" onChange={(e) => setTitle(e.target.value)} />
-
+                            <label className={`input w-full input-bordered flex hover:shadow items-center gap-2 ${errorMessageTitle && 'input-error'}`}>
+                                <input type='text' className='input grow input-md' value={title} placeholder="Type your title here..." onChange={handleTitleChange} />
+                                {errorMessageTitle && <p className='text-error text-sm'>{errorMessageTitle}</p>}
+                            </label>
                         </div>
                         <div className="w-full h-72 rounded-lg flex flex-col bg-white">
                             <div className="w-full h-5/6 rounded-xl">
-                                <textarea className="textarea w-full h-full" placeholder="Ask your inquiries here..." value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+                                <textarea className={`textarea w-full h-full ${errorMessageDesc && 'textarea-error'}`} placeholder="Ask your inquiries here..." value={description} onChange={handleDescChange}></textarea>
                             </div>
                             <div className="w-full h-1/6 rounded-lg flex flex-row justify-between">
                                 <div className="w-28 h-full flex items-center justify-evenly rounded-lg">
@@ -109,20 +161,20 @@ const CreateEvent = ({ visible, onClose, onSuccess }) => {
                         </div>
                         {/* attachments */}
                         <div className="w-full h-16 bg-white mt-5 rounded-md flex justify-center items-center">
-                            <select className="select select-bordered w-full max-w-xs" onChange={e => setEventType(e.target.value)}>
+                            {/* <select className="select select-bordered w-full max-w-xs" onChange={e => setEventType(e.target.value)}>
                                 <option disabled selected>Event Type:</option>
                                 <option value={'Announement'}>Announcement</option>
                                 <option value={'Seminar'}>Seminar</option>
                                 <option value={'Charity'}>Charity</option>
                                 <option value={'Sports'}>Sports</option>
                                 <option value={'Social'}>Social</option>
-                            </select>
+                            </select> */}
                         </div>
                         {/* buttons */}
                         <div className="w-full h-8 mt-5 rounded-md flex justify-end">
                             <div className="w-[16rem] h-full flex justify-between">
                                 <button onClick={handleClose} className="btn btn-sm w-28"> Cancel </button>
-                                <button className="btn btn-sm btn-success text-white w-28" onClick={() => { handlePost() }}> Post </button>
+                                <button className={`btn btn-sm btn-success text-white w-28 ${!title || !description || errorMessageTitle || errorMessageDesc ? 'btn-disabled' : ''}`} onClick={() => { handlePost() }}> Post </button>
                             </div>
                         </div>
                     </div>
